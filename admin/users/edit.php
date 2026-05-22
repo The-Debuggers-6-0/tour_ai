@@ -59,6 +59,7 @@ $currentGroupId = (int)($userGroup['groups_id'] ?? 0);
 
 $tpl = new Template('html/admin/users_form');
 setAdminCommonContent($tpl);
+$tpl->setContent('form_action',      BASE_URL . 'admin/users/edit.php?id=' . $userId);
 $tpl->setContent('u_id',             $userId);
 $tpl->setContent('u_username',       htmlspecialchars($user['username']));
 $tpl->setContent('u_email',          htmlspecialchars($user['email']));
@@ -66,9 +67,12 @@ $tpl->setContent('u_first',          htmlspecialchars($user['first_name'] ?? '')
 $tpl->setContent('u_last',           htmlspecialchars($user['last_name']  ?? ''));
 $tpl->setContent('u_phone',          htmlspecialchars($user['phone']      ?? ''));
 $tpl->setContent('u_active_checked', $user['is_active'] ? 'checked' : '');
+$tpl->setContent('password_label',   'Nuova password <span style="color:#8B7355; font-weight:normal; font-size:0.9em;">(lascia vuoto per non cambiare)</span>');
+$tpl->setContent('password_required','');
 $tpl->setContent('csrf_token',       generateCsrfToken());
+$tpl->setContent('grp_is_user',      $currentGroupId === 3 || $currentGroupId === 0 ? '1' : '');
 
-$groups = queryAll("SELECT id, name FROM groups ORDER BY name");
+$groups = queryAll("SELECT id, name FROM groups WHERE name IN ('admin', 'guide') ORDER BY name");
 foreach ($groups as $grp) {
     $tpl->setContent('grp_id',       (int)$grp['id']);
     $tpl->setContent('grp_name',     htmlspecialchars($grp['name']));

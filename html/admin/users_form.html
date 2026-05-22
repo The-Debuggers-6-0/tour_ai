@@ -38,9 +38,9 @@
       </div>
       <[if!empty flash_message]><div class="alert alert-<[flash_type]>"><span><[flash_message]></span><button class="alert-close">✕</button></div><[/if!empty]>
 
-      <form method="POST" action="<[base_url]>admin/users/edit.php?id=<[u_id]>" class="admin-form">
+      <form method="POST" action="<[form_action]>" class="admin-form">
         <input type="hidden" name="csrf_token" value="<[csrf_token]>">
-        <input type="hidden" name="user_id" value="<[u_id]>">
+        <[if!empty u_id]><input type="hidden" name="user_id" value="<[u_id]>"><[/if!empty]>
         <div class="form-section">
           <div class="form-section-title">Dati account</div>
           <div class="form-section-body">
@@ -79,8 +79,8 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Nuova password <span style="color:#8B7355;">(lascia vuoto per non cambiare)</span></label>
-              <input type="password" name="new_password" class="form-control" autocomplete="new-password">
+              <label class="form-label"><[password_label]> <[if!empty password_required]><span class="req">*</span><[/if!empty]></label>
+              <input type="password" name="new_password" class="form-control" autocomplete="new-password" <[password_required]>>
             </div>
           </div>
         </div>
