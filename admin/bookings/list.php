@@ -49,7 +49,10 @@ foreach ($bookings as $ba) {
     $tpl->setContent('ba_participants', (int)$ba['total_participants']);
     $tpl->setContent('ba_price',        number_format($ba['total_price'], 2, ',', '.'));
     $tpl->setContent('ba_status_badge', statusLabel($ba['status']));
+    $tpl->setContent('loop_base_url',   BASE_URL);
 }
+
+$tpl->setContent('has_bookings', count($bookings) > 0 ? '1' : '');
 
 $tpl->setContent('bookings_pagination', buildPagination($page, $total, $perPage, $_GET));
 $tpl->close();

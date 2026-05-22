@@ -45,7 +45,7 @@ $bookings = queryAll(
      JOIN time_slots s  ON s.id = b.time_slots_id
      JOIN tours t  ON t.id = s.tours_id
      JOIN locations l ON l.id = t.locations_id
-     WHERE b.users_id = ?
+     WHERE b.users_id = ? AND b.status != 'cancellata'
      ORDER BY b.created_at DESC",
     'i', $userId
 );

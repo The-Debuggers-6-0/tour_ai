@@ -65,7 +65,10 @@ foreach ($tours as $ta) {
     $tpl->setContent('ta_image',       $cover);
     $tpl->setContent('ta_active_badge',$activeBadge);
     $tpl->setContent('ta_slug',        htmlspecialchars($ta['slug']));
+    $tpl->setContent('loop_base_url',       BASE_URL);
 }
+
+$tpl->setContent('has_tours', count($tours) > 0 ? '1' : '');
 
 $tpl->setContent('tours_pagination', buildPagination($page, $total, $perPage, $_GET));
 $tpl->setContent('csrf_token',       generateCsrfToken());

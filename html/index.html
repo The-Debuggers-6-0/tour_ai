@@ -21,7 +21,9 @@
       <div class="user-menu">
         <div class="user-avatar"><[username_initial]></div>
         <[admin_dashboard_btn]>
+          <[ifempty is_admin]>
           <a href="<[base_url]>my_bookings.php" class="btn btn-sm btn-secondary">Le mie prenotazioni</a>
+        <[/ifempty]>
         <a href="<[base_url]>profile.php" class="btn btn-sm btn-secondary"><[username_display]></a>
         <a href="<[base_url]>logout.php" class="btn btn-sm">Esci</a>
       </div>
@@ -207,7 +209,9 @@
         <ul class="footer-links">
           <li><a href="<[base_url]>login.php">Accedi</a></li>
           <li><a href="<[base_url]>register.php">Registrati</a></li>
+          <[ifempty is_admin]>
           <li><a href="<[base_url]>my_bookings.php">Le mie prenotazioni</a></li>
+        <[/ifempty]>
           <li><a href="<[base_url]>profile.php">Profilo</a></li>
         </ul>
       </div>

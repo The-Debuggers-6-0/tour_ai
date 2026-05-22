@@ -44,6 +44,10 @@ foreach ($reviews as $ra) {
     $tpl->setContent('ra_date',          formatDate($ra['created_at']));
     $tpl->setContent('ra_approved_badge',$approvedBadge);
     $tpl->setContent('ra_can_approve',   !$ra['is_approved'] ? '1' : '');
+    $tpl->setContent('loop_base_url',    BASE_URL);
+    $tpl->setContent('loop_csrf_token',  generateCsrfToken());
 }
+
+$tpl->setContent('has_reviews', count($reviews) > 0 ? '1' : '');
 
 $tpl->close();

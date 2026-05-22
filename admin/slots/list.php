@@ -50,7 +50,10 @@ foreach ($slots as $sla) {
     $tpl->setContent('sla_available',    (int)$sla['available_seats']);
     $tpl->setContent('sla_booked',       (int)$sla['booked']);
     $tpl->setContent('sla_status_badge', $statusBadge);
+    $tpl->setContent('loop_base_url',    BASE_URL);
 }
+
+$tpl->setContent('has_slots', count($slots) > 0 ? '1' : '');
 
 $tpl->setContent('csrf_token', generateCsrfToken());
 $tpl->close();

@@ -11,12 +11,15 @@
   <aside class="admin-sidebar">
     <div class="sidebar-brand"><a href="<[base_url]>" class="sidebar-logo"><[site_name]></a><div class="sidebar-subtitle">Pannello Admin</div></div>
     <nav class="sidebar-nav">
+      <div class="sidebar-section-title">Principale</div>
       <a href="<[base_url]>admin/" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <div class="sidebar-section-title">Contenuti</div>
       <a href="<[base_url]>admin/tours/list.php" class="sidebar-link"><span class="sidebar-icon">🗺</span> Tour</a>
       <a href="<[base_url]>admin/guides/list.php" class="sidebar-link"><span class="sidebar-icon">👤</span> Guide</a>
       <a href="<[base_url]>admin/slots/list.php" class="sidebar-link active"><span class="sidebar-icon">📅</span> Slot</a>
       <a href="<[base_url]>admin/categories/list.php" class="sidebar-link"><span class="sidebar-icon">🏷</span> Categorie</a>
       <a href="<[base_url]>admin/locations/list.php" class="sidebar-link"><span class="sidebar-icon">📍</span> Luoghi</a>
+      <div class="sidebar-section-title">Gestione</div>
       <a href="<[base_url]>admin/bookings/list.php" class="sidebar-link"><span class="sidebar-icon">📋</span> Prenotazioni</a>
       <a href="<[base_url]>admin/reviews/list.php" class="sidebar-link"><span class="sidebar-icon">⭐</span> Recensioni</a>
       <a href="<[base_url]>admin/users/list.php" class="sidebar-link"><span class="sidebar-icon">👥</span> Utenti</a>
@@ -54,6 +57,7 @@
 
       <div class="admin-card">
         <div class="table-responsive">
+          <[if!empty has_slots]>
           <table class="admin-table">
             <thead><tr><th>#</th><th>Tour</th><th>Data</th><th>Ora inizio</th><th>Ora fine</th><th>Disponibili</th><th>Prenotati</th><th>Stato</th><th>Azioni</th></tr></thead>
             <tbody>
@@ -68,13 +72,19 @@
                 <td><[sla_booked]></td>
                 <td><[sla_status_badge]></td>
                 <td class="table-actions">
-                  <a href="<[base_url]>admin/slots/edit.php?id=<[sla_id]>" class="table-btn table-btn-edit" title="Modifica">✏️</a>
-                  <button class="table-btn table-btn-delete" data-delete-url="<[base_url]>admin/slots/delete.php?id=<[sla_id]>" data-delete-name="Slot <[sla_date]>" title="Elimina">🗑</button>
+                  <a href="<[loop_base_url]>admin/slots/edit.php?id=<[sla_id]>" class="table-btn table-btn-edit" title="Modifica">✏️</a>
+                  <button class="table-btn table-btn-delete" data-delete-url="<[loop_base_url]>admin/slots/delete.php?id=<[sla_id]>" data-delete-name="Slot <[sla_date]>" title="Elimina">🗑</button>
                 </td>
               </tr>
               <[/foreach]>
             </tbody>
           </table>
+          <[/if!empty]>
+          <[ifempty has_slots]>
+          <div style="padding: 40px 20px; text-align: center; color: #888;">
+             Nessuno slot trovato.
+          </div>
+          <[/ifempty]>
         </div>
       </div>
     </div>

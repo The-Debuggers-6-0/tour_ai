@@ -35,7 +35,10 @@ foreach ($guides as $ga) {
     $tpl->setContent('ga_langs',       htmlspecialchars($ga['languages'] ?? ''));
     $tpl->setContent('ga_rating',      number_format($ga['avg_rating'], 1));
     $tpl->setContent('ga_active_badge',$activeBadge);
+    $tpl->setContent('loop_base_url',       BASE_URL);
 }
+
+$tpl->setContent('has_guides', count($guides) > 0 ? '1' : '');
 
 $tpl->setContent('csrf_token', generateCsrfToken());
 $tpl->close();

@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../template2.inc.php';
 
 requireAdmin();
 
-$userId = (int)($_GET['id'] ?? 0);
+$userId = (int)($_GET['id'] ?? $_POST['user_id'] ?? 0);
 if ($userId <= 0) { header('Location: ' . BASE_URL . 'admin/users/list.php'); exit; }
 
 $user = queryOne("SELECT * FROM users WHERE id = ?", 'i', $userId);

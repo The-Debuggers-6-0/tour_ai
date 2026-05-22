@@ -14,12 +14,15 @@
       <div class="sidebar-subtitle">Pannello Admin</div>
     </div>
     <nav class="sidebar-nav">
+      <div class="sidebar-section-title">Principale</div>
       <a href="<[base_url]>admin/" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <div class="sidebar-section-title">Contenuti</div>
       <a href="<[base_url]>admin/tours/list.php" class="sidebar-link active"><span class="sidebar-icon">🗺</span> Tour</a>
       <a href="<[base_url]>admin/guides/list.php" class="sidebar-link"><span class="sidebar-icon">👤</span> Guide</a>
       <a href="<[base_url]>admin/slots/list.php" class="sidebar-link"><span class="sidebar-icon">📅</span> Slot</a>
       <a href="<[base_url]>admin/categories/list.php" class="sidebar-link"><span class="sidebar-icon">🏷</span> Categorie</a>
       <a href="<[base_url]>admin/locations/list.php" class="sidebar-link"><span class="sidebar-icon">📍</span> Luoghi</a>
+      <div class="sidebar-section-title">Gestione</div>
       <a href="<[base_url]>admin/bookings/list.php" class="sidebar-link"><span class="sidebar-icon">📋</span> Prenotazioni</a>
       <a href="<[base_url]>admin/reviews/list.php" class="sidebar-link"><span class="sidebar-icon">⭐</span> Recensioni</a>
       <a href="<[base_url]>admin/users/list.php" class="sidebar-link"><span class="sidebar-icon">👥</span> Utenti</a>
@@ -69,6 +72,7 @@
           <span class="admin-card-title">Lista tour (<[total_tours]>)</span>
         </div>
         <div class="table-responsive">
+          <[if!empty has_tours]>
           <table class="admin-table">
             <thead>
               <tr><th>#</th><th>Immagine</th><th>Titolo</th><th>Categoria</th><th>Città</th><th>Prezzo</th><th>Rating</th><th>Stato</th><th>Azioni</th></tr>
@@ -85,14 +89,20 @@
                 <td><[ta_rating]> ★</td>
                 <td><[ta_active_badge]></td>
                 <td class="table-actions">
-                  <a href="<[base_url]>tour_detail.php?slug=<[ta_slug]>" class="table-btn table-btn-view" title="Visualizza" target="_blank">👁</a>
-                  <a href="<[base_url]>admin/tours/edit.php?id=<[ta_id]>" class="table-btn table-btn-edit" title="Modifica">✏️</a>
-                  <button class="table-btn table-btn-delete" data-delete-url="<[base_url]>admin/tours/delete.php?id=<[ta_id]>" data-delete-name="<[ta_title]>" title="Elimina">🗑</button>
+                  <a href="<[loop_base_url]>tour_detail.php?slug=<[ta_slug]>" class="table-btn table-btn-view" title="Visualizza" target="_blank">👁</a>
+                  <a href="<[loop_base_url]>admin/tours/edit.php?id=<[ta_id]>" class="table-btn table-btn-edit" title="Modifica">✏️</a>
+                  <button class="table-btn table-btn-delete" data-delete-url="<[loop_base_url]>admin/tours/delete.php?id=<[ta_id]>" data-delete-name="<[ta_title]>" title="Elimina">🗑</button>
                 </td>
               </tr>
               <[/foreach]>
             </tbody>
           </table>
+          <[/if!empty]>
+          <[ifempty has_tours]>
+          <div style="padding: 40px 20px; text-align: center; color: #888;">
+             Nessun tour trovato.
+          </div>
+          <[/ifempty]>
         </div>
       </div>
       <[tours_pagination]>

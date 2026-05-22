@@ -8,7 +8,7 @@ requireAdmin();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !verifyCsrfToken($_POST['csrf_token'] ?? '')) {
     header('Location: ' . BASE_URL . 'admin/reviews/list.php'); exit;
 }
-$id = (int)($_GET['id'] ?? 0);
+$id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
 if ($id > 0) {
     execute("DELETE FROM reviews WHERE id = ?", 'i', $id);
     setFlash('Recensione eliminata.', 'success');

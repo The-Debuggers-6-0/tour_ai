@@ -22,5 +22,8 @@ foreach ($cats as $cad) {
     $tpl->setContent('cad_name',        htmlspecialchars($cad['name']));
     $tpl->setContent('cad_slug',        htmlspecialchars($cad['slug']));
     $tpl->setContent('cad_tours_count', (int)$cad['tours_count']);
+    $tpl->setContent('loop_base_url',        BASE_URL);
 }
+
+$tpl->setContent('has_categories', count($cats) > 0 ? '1' : '');
 $tpl->close();

@@ -20,7 +20,9 @@
       <div class="user-menu">
         <div class="user-avatar"><[username_initial]></div>
         <[admin_dashboard_btn]>
+          <[ifempty is_admin]>
           <a href="<[base_url]>my_bookings.php" class="btn btn-sm btn-secondary active">Le mie prenotazioni</a>
+        <[/ifempty]>
         <a href="<[base_url]>profile.php" class="btn btn-sm btn-secondary"><[username_display]></a>
         <a href="<[base_url]>logout.php" class="btn btn-sm">Esci</a>
       </div>
@@ -99,8 +101,7 @@
         <[if!empty mb_can_cancel]>
         <form method="POST" action="<[base_url]>my_bookings.php" style="margin-top:12px;">
           <input type="hidden" name="csrf_token" value="<[mb_csrf]>">
-          <input type="hidden" name="action" value="cancel">
-          <input type="hidden" name="booking_id" value="<[mb_id]>">
+          <input type="hidden" name="cancel_booking_id" value="<[mb_id]>">
           <button type="submit" class="btn btn-danger btn-sm"
                   onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione?')">
             Cancella prenotazione

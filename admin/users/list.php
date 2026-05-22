@@ -35,14 +35,25 @@ $users = queryAll(
      LEFT JOIN users_has_groups ug ON ug.users_id = u.id
      LEFT JOIN groups g ON g.id = ug.groups_id
      $whereSQL
-     ORDER BY u.created_at DESC LIMIT ? OFFSET ?",
+     ORDER BY g.name ASC, u.created_at DESC LIMIT ? OFFSET ?",
     $types . 'ii', ...[...$params, $perPage, $offset]
 );
 
+$currentGroup = null;
 foreach ($users as $ua) {
+    $groupName = $ua['group_name'] ?? 'Senza gruppo';
+    
+    $groupHeader = '';
+    if ($groupName !== $currentGroup) {
+        $groupHeader = '<tr style="background-color: #E8D5C4;"><td colspan="8" style="font-weight: bold; font-size: 1.1rem; color: #5C4033; padding-top: 16px; padding-bottom: 8px;">' . htmlspecialchars(ucfirst($groupName)) . '</td></tr>';
+        $currentGroup = $groupName;
+    }
+
     $activeBadge = $ua['is_active']
         ? '<span class="badge badge-success">Attivo</span>'
         : '<span class="badge badge-secondary">Inattivo</span>';
+        
+    $tpl->setContent('ua_group_header', $groupHeader);
     $tpl->setContent('ua_id',          (int)$ua['id']);
     $tpl->setContent('ua_username',    htmlspecialchars($ua['username']));
     $tpl->setContent('ua_email',       htmlspecialchars($ua['email']));
@@ -50,7 +61,10 @@ foreach ($users as $ua) {
     $tpl->setContent('ua_group',       htmlspecialchars($ua['group_name'] ?? '—'));
     $tpl->setContent('ua_active_badge',$activeBadge);
     $tpl->setContent('ua_created',     formatDate($ua['created_at']));
+    $tpl->setContent('loop_base_url',       BASE_URL);
 }
+
+$tpl->setContent('has_users', count($users) > 0 ? '1' : '');
 
 $tpl->setContent('users_pagination', buildPagination($page, $total, $perPage, $_GET));
 $tpl->close();

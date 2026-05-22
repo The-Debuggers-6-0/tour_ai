@@ -23,5 +23,8 @@ foreach ($locs as $lad) {
     $tpl->setContent('lad_region',      htmlspecialchars($lad['region'] ?? ''));
     $tpl->setContent('lad_country',     htmlspecialchars($lad['country'] ?? 'Italia'));
     $tpl->setContent('lad_tours_count', (int)$lad['tours_count']);
+    $tpl->setContent('loop_base_url',   BASE_URL);
 }
+
+$tpl->setContent('has_locations', count($locs) > 0 ? '1' : '');
 $tpl->close();

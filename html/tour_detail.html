@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><[tour_title]> â€” <[site_name]></title>
+  <title><[tour_title]> — <[site_name]></title>
   <link rel="stylesheet" href="<[base_url]>css/style.css">
 </head>
 <body>
@@ -21,7 +21,9 @@
       <div class="user-menu">
         <div class="user-avatar"><[username_initial]></div>
         <[admin_dashboard_btn]>
+          <[ifempty is_admin]>
           <a href="<[base_url]>my_bookings.php" class="btn btn-sm btn-secondary">Le mie prenotazioni</a>
+        <[/ifempty]>
         <a href="<[base_url]>profile.php" class="btn btn-sm btn-secondary"><[username_display]></a>
         <a href="<[base_url]>logout.php" class="btn btn-sm">Esci</a>
       </div>
@@ -38,7 +40,7 @@
 <div class="container mt-2">
   <div class="alert alert-<[flash_type]>">
     <span><[flash_message]></span>
-    <button class="alert-close" type="button">âœ•</button>
+    <button class="alert-close" type="button">✕</button>
   </div>
 </div>
 <[/if!empty]>
@@ -68,7 +70,7 @@
 
   <!-- Lightbox -->
   <div id="gallery-lightbox" class="gallery-lightbox">
-    <button id="lightbox-close" class="lightbox-close" aria-label="Chiudi">âœ•</button>
+    <button id="lightbox-close" class="lightbox-close" aria-label="Chiudi">✕</button>
     <img id="lightbox-img" src="" alt="" class="lightbox-img">
   </div>
 
@@ -79,7 +81,7 @@
       <div style="display:flex; gap:10px; align-items:center; margin-bottom:12px; flex-wrap:wrap;">
         <span class="badge badge-info"><[tour_category]></span>
         <[tour_difficulty_badge]>
-        <span class="badge badge-secondary">ðŸ“ <[tour_city]></span>
+        <span class="badge badge-secondary">📍 <[tour_city]></span>
       </div>
       <h1 style="margin-bottom:12px;"><[tour_title]></h1>
       <div class="rating-display" style="margin-bottom:20px;">
@@ -110,7 +112,7 @@
               <div class="guide-detail-name"><[gd_name]> <[gd_lead_badge]></div>
               <div class="guide-detail-role"><[gd_spec]></div>
               <div class="guide-detail-bio"><[gd_bio]></div>
-              <div class="guide-langs" style="margin-top:6px;">ðŸŒ <[gd_langs]></div>
+              <div class="guide-langs" style="margin-top:6px;">🌍 <[gd_langs]></div>
             </div>
           </div>
           <[/foreach]>
@@ -120,7 +122,7 @@
       <!-- Incluso / Cosa portare -->
       <div class="tour-section" style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
         <div>
-          <h2>Cosa Ã¨ incluso</h2>
+          <h2>Cosa è incluso</h2>
           <div class="checklist"><[tour_included_html]></div>
         </div>
         <div>
@@ -201,7 +203,7 @@
             </div>
             <div class="form-group">
               <label for="review-title" class="form-label">Titolo</label>
-              <input type="text" id="review-title" name="title" class="form-control">
+              <input type="text" id="review-title" name="review_title" class="form-control" required>
             </div>
             <div class="form-group">
               <label for="review-comment" class="form-label">Commento</label>
