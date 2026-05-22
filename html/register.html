@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrati — <[site_name]></title>
+  <link rel="stylesheet" href="<[base_url]>css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="<[base_url]>" class="site-logo"><[site_name]></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav class="main-nav">
+      <a href="<[base_url]>" class="nav-link">Home</a>
+      <a href="<[base_url]>tours.php" class="nav-link">Tour</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="<[base_url]>login.php" class="btn btn-sm btn-secondary">Accedi</a>
+      <a href="<[base_url]>register.php" class="btn btn-sm btn-primary">Registrati</a>
+    </div>
+  </div>
+</header>
+
+<main class="auth-page" style="align-items: flex-start; padding: 40px 20px;">
+  <div class="auth-card" style="max-width: 520px;">
+    <div class="auth-logo">🗺 <[site_name]></div>
+    <h1 class="auth-title">Crea il tuo account</h1>
+    <p class="auth-subtitle">Unisciti a noi e scopri esperienze uniche</p>
+
+    <[if!empty flash_message]>
+    <div class="alert alert-<[flash_type]>">
+      <span><[flash_message]></span>
+      <button class="alert-close" type="button">✕</button>
+    </div>
+    <[/if!empty]>
+
+    <form method="POST" action="<[base_url]>register.php" novalidate>
+      <input type="hidden" name="csrf_token" value="<[csrf_token]>">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="first_name">Nome <span class="req">*</span></label>
+          <input type="text" id="first_name" name="first_name" class="form-control"
+                 value="<[reg_first]>" placeholder="Mario" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="last_name">Cognome <span class="req">*</span></label>
+          <input type="text" id="last_name" name="last_name" class="form-control"
+                 value="<[reg_last]>" placeholder="Rossi" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="username">Username <span class="req">*</span></label>
+        <input type="text" id="username" name="username" class="form-control"
+               value="<[reg_username]>" placeholder="mario_rossi" autocomplete="username" required>
+        <span class="form-text">Solo lettere, numeri e underscore. Minimo 3 caratteri.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email <span class="req">*</span></label>
+        <input type="email" id="email" name="email" class="form-control"
+               value="<[reg_email]>" placeholder="mario@esempio.it" autocomplete="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="phone">Telefono</label>
+        <input type="tel" id="phone" name="phone" class="form-control"
+               value="<[reg_phone]>" placeholder="+39 333 1234567">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="password">Password <span class="req">*</span></label>
+          <input type="password" id="password" name="password" class="form-control"
+                 placeholder="Minimo 8 caratteri" autocomplete="new-password" required>
+          <span class="form-text">Minimo 8 caratteri.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password_confirm">Conferma password <span class="req">*</span></label>
+          <input type="password" id="password_confirm" name="password_confirm" class="form-control"
+                 placeholder="Ripeti la password" autocomplete="new-password" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full mt-2">Crea account</button>
+    </form>
+
+    <div class="auth-footer">
+      Hai già un account? <a href="<[base_url]>login.php">Accedi</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>&copy; 2026 <[site_name]>. Tutti i diritti riservati.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="<[base_url]>js/main.js"></script>
+</body>
+</html>

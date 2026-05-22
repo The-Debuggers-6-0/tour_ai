@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><[page_title]> — <[site_name]></title>
+  <link rel="stylesheet" href="<[base_url]>css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="<[base_url]>" class="site-logo"><[site_name]></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav class="main-nav">
+      <a href="<[base_url]>" class="nav-link active">Home</a>
+      <a href="<[base_url]>tours.php" class="nav-link">Tour</a>
+    </nav>
+    <div class="nav-actions">
+      <[if!empty user_logged]>
+      <div class="user-menu">
+        <div class="user-avatar"><[username_initial]></div>
+        <[admin_dashboard_btn]>
+          <a href="<[base_url]>my_bookings.php" class="btn btn-sm btn-secondary">Le mie prenotazioni</a>
+        <a href="<[base_url]>profile.php" class="btn btn-sm btn-secondary"><[username_display]></a>
+        <a href="<[base_url]>logout.php" class="btn btn-sm">Esci</a>
+      </div>
+      <[/if!empty]>
+      <[ifempty user_logged]>
+      <a href="<[base_url]>login.php" class="btn btn-sm btn-secondary">Accedi</a>
+      <a href="<[base_url]>register.php" class="btn btn-sm btn-primary">Registrati</a>
+      <[/ifempty]>
+    </div>
+  </div>
+</header>
+
+<[if!empty flash_message]>
+<div class="container mt-2">
+  <div class="alert alert-<[flash_type]>">
+    <span><[flash_message]></span>
+    <button class="alert-close" type="button">✕</button>
+  </div>
+</div>
+<[/if!empty]>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">✈️ Scopri l'Italia con noi</div>
+    <h1>Esplora l'Italia con Guide Esperte</h1>
+    <p>Tour culturali, storici e naturalistici in tutta Italia.<br>Prenota oggi la tua prossima avventura.</p>
+    <form class="hero-search" action="<[base_url]>tours.php" method="GET">
+      <input type="text" name="q" placeholder="Cerca per città o parola chiave..." aria-label="Cerca tour">
+      <select name="category" aria-label="Categoria">
+        <option value="">Tutte le categorie</option>
+        <[foreach]>
+        <option value="<[hcat_slug]>"><[hcat_name]></option>
+        <[/foreach]>
+      </select>
+      <button type="submit" class="btn btn-primary">Cerca</button>
+    </form>
+  </div>
+</section>
+
+<!-- ── Tour in evidenza ── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Tour in Evidenza</h2>
+      <p class="section-subtitle">I percorsi più apprezzati dai nostri viaggiatori</p>
+    </div>
+    <div class="tours-grid">
+      <[foreach]>
+      <article class="tour-card">
+        <div class="tour-card-image">
+          <img src="<[ft_image]>" alt="<[ft_title]>" loading="lazy">
+          <span class="tour-card-badge"><[ft_category]></span>
+          <span class="tour-card-price-badge">€ <[ft_price]></span>
+        </div>
+        <div class="tour-card-body">
+          <div class="tour-card-meta">
+            <span>📍 <[ft_city]></span>
+            <span>⏱ <[ft_duration]></span>
+            <span class="badge badge-secondary"><[ft_difficulty]></span>
+          </div>
+          <h3 class="tour-card-title"><[ft_title]></h3>
+          <div class="tour-card-footer">
+            <div class="rating-display">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value"><[ft_rating]></span>
+              <span class="rating-count">(<[ft_reviews]> rec.)</span>
+            </div>
+            <a href="<[base_url]>tour_detail.php?slug=<[ft_slug]>" class="btn btn-primary btn-sm">Scopri</a>
+          </div>
+        </div>
+      </article>
+      <[/foreach]>
+    </div>
+    <div class="text-center mt-4">
+      <a href="<[base_url]>tours.php" class="btn btn-secondary btn-lg">Vedi tutti i tour →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Categorie ── -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Esplora per Categoria</h2>
+      <p class="section-subtitle">Trova il tour perfetto per i tuoi interessi</p>
+    </div>
+    <div class="categories-grid">
+      <[foreach]>
+      <a href="<[base_url]>tours.php?category=<[cat_slug]>" class="category-card" style="text-decoration:none;">
+        <span class="category-icon"><[cat_icon]></span>
+        <div class="category-name"><[cat_name]></div>
+        <div class="category-count"><[cat_count]> tour</div>
+      </a>
+      <[/foreach]>
+    </div>
+  </div>
+</section>
+
+<!-- ── Guide ── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Le Nostre Guide</h2>
+      <p class="section-subtitle">Esperti appassionati pronti a farti vivere esperienze uniche</p>
+    </div>
+    <div class="guides-grid">
+      <[foreach]>
+      <div class="guide-card">
+        <[if!empty gp_photo]>
+        <img src="<[gp_photo]>" alt="<[gp_name]>" class="guide-photo">
+        <[/if!empty]>
+        <[ifempty gp_photo]>
+        <div class="guide-photo-placeholder"><[gp_initial]></div>
+        <[/ifempty]>
+        <div class="guide-name"><[gp_name]></div>
+        <div class="guide-spec"><[gp_spec]></div>
+        <div class="rating-display" style="justify-content:center;">
+          <span style="color:#DAA520">★</span>
+          <span class="rating-value"><[gp_rating]></span>
+        </div>
+        <div class="guide-langs mt-1"><[gp_langs]></div>
+      </div>
+      <[/foreach]>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ultime recensioni ── -->
+<section class="section section-bg">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Cosa Dicono i Nostri Viaggiatori</h2>
+      <p class="section-subtitle">Esperienze reali, emozioni autentiche</p>
+    </div>
+    <div class="reviews-grid">
+      <[foreach]>
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-author"><[hr_author]></span>
+          <span class="review-date"><[hr_date]></span>
+        </div>
+        <div style="color:#DAA520; margin-bottom:10px; font-size:1.1rem;"><[hr_stars]></div>
+        <p class="review-comment"><[hr_comment]></p>
+        <div class="review-tour">Tour: <[hr_tour_title]></div>
+      </div>
+      <[/foreach]>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section">
+  <div class="container text-center">
+    <h2>Pronto per la tua prossima avventura?</h2>
+    <p class="text-muted mt-1 mb-3">Scegli tra oltre <[total_tours]> tour in tutta Italia</p>
+    <a href="<[base_url]>tours.php" class="btn btn-primary btn-lg">Esplora i tour</a>
+    <[ifempty user_logged]>
+    &nbsp;
+    <a href="<[base_url]>register.php" class="btn btn-secondary btn-lg">Registrati gratis</a>
+    <[/ifempty]>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">🗺 <[site_name]></div>
+        <p class="footer-desc">Esperienze di viaggio uniche con guide esperte e appassionate in tutta Italia. Musei, monumenti, trekking e molto altro.</p>
+      </div>
+      <div>
+        <div class="footer-title">Tour</div>
+        <ul class="footer-links">
+          <li><a href="<[base_url]>tours.php?category=musei">Musei</a></li>
+          <li><a href="<[base_url]>tours.php?category=monumenti">Monumenti</a></li>
+          <li><a href="<[base_url]>tours.php?category=cammini">Cammini</a></li>
+          <li><a href="<[base_url]>tours.php?category=natura">Natura</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-title">Account</div>
+        <ul class="footer-links">
+          <li><a href="<[base_url]>login.php">Accedi</a></li>
+          <li><a href="<[base_url]>register.php">Registrati</a></li>
+          <li><a href="<[base_url]>my_bookings.php">Le mie prenotazioni</a></li>
+          <li><a href="<[base_url]>profile.php">Profilo</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-title">Contatti</div>
+        <ul class="footer-links">
+          <li>📧 info@tourguidati.it</li>
+          <li>📞 +39 06 12345678</li>
+          <li>📍 Via della Repubblica 1, Roma</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 <[site_name]>. Tutti i diritti riservati. — Tecnologie del Web 2025/2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="<[base_url]>js/main.js"></script>
+</body>
+</html>

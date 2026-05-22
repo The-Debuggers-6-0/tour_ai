@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prenotazione <[bk_code]> — Admin — <[site_name]></title>
+  <link rel="stylesheet" href="<[base_url]>css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand"><a href="<[base_url]>" class="sidebar-logo"><[site_name]></a><div class="sidebar-subtitle">Pannello Admin</div></div>
+    <nav class="sidebar-nav">
+      <a href="<[base_url]>admin/" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <a href="<[base_url]>admin/tours/list.php" class="sidebar-link"><span class="sidebar-icon">🗺</span> Tour</a>
+      <a href="<[base_url]>admin/guides/list.php" class="sidebar-link"><span class="sidebar-icon">👤</span> Guide</a>
+      <a href="<[base_url]>admin/slots/list.php" class="sidebar-link"><span class="sidebar-icon">📅</span> Slot</a>
+      <a href="<[base_url]>admin/categories/list.php" class="sidebar-link"><span class="sidebar-icon">🏷</span> Categorie</a>
+      <a href="<[base_url]>admin/locations/list.php" class="sidebar-link"><span class="sidebar-icon">📍</span> Luoghi</a>
+      <a href="<[base_url]>admin/bookings/list.php" class="sidebar-link active"><span class="sidebar-icon">📋</span> Prenotazioni</a>
+      <a href="<[base_url]>admin/reviews/list.php" class="sidebar-link"><span class="sidebar-icon">⭐</span> Recensioni</a>
+      <a href="<[base_url]>admin/users/list.php" class="sidebar-link"><span class="sidebar-icon">👥</span> Utenti</a>
+    </nav>
+    <div class="sidebar-footer"><a href="<[base_url]>logout.php">Esci</a></div>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title">Dettaglio prenotazione</div>
+      <div class="topbar-user"><div class="topbar-avatar"><[admin_initial]></div><span><[admin_name]></span></div>
+    </div>
+    <div class="admin-content">
+      <div class="page-header">
+        <div class="page-header-left"><h1>Prenotazione <[bk_code]></h1><div class="page-breadcrumb"><a href="<[base_url]>admin/">Dashboard</a> / <a href="<[base_url]>admin/bookings/list.php">Prenotazioni</a> / <[bk_code]></div></div>
+        <a href="<[base_url]>admin/bookings/list.php" class="btn btn-secondary">← Torna alla lista</a>
+      </div>
+      <[if!empty flash_message]><div class="alert alert-<[flash_type]>"><span><[flash_message]></span><button class="alert-close">✕</button></div><[/if!empty]>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+        <div class="admin-card" style="padding:24px;">
+          <div class="form-section-title" style="margin-bottom:16px;">Dettagli prenotazione</div>
+          <table style="width:100%; border-collapse:collapse;">
+            <tr><td style="padding:8px 0; color:#8B7355; width:140px;">Codice</td><td style="font-family:monospace; font-weight:700; font-size:1.1rem;"><[bk_code]></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Stato</td><td><[bk_status_badge]></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Data prenotazione</td><td><[bk_created]></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Partecipanti</td><td><[bk_participants_count]></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Prezzo totale</td><td style="font-weight:600; color:#8B4513;">€ <[bk_price]></td></tr>
+            <[if!empty bk_notes]><tr><td style="padding:8px 0; color:#8B7355; vertical-align:top;">Note</td><td><[bk_notes]></td></tr><[/if!empty]>
+          </table>
+        </div>
+        <div class="admin-card" style="padding:24px;">
+          <div class="form-section-title" style="margin-bottom:16px;">Tour e slot</div>
+          <table style="width:100%; border-collapse:collapse;">
+            <tr><td style="padding:8px 0; color:#8B7355; width:140px;">Tour</td><td><strong><[bk_tour]></strong></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Città</td><td><[bk_city]></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Data slot</td><td><[bk_slot_date]></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Orario</td><td><[bk_slot_time]></td></tr>
+          </table>
+          <div class="form-section-title" style="margin:20px 0 16px;">Utente</div>
+          <table style="width:100%; border-collapse:collapse;">
+            <tr><td style="padding:8px 0; color:#8B7355; width:140px;">Nome</td><td><[bk_user]></td></tr>
+            <tr><td style="padding:8px 0; color:#8B7355;">Email</td><td><[bk_user_email]></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-card" style="margin-top:24px; padding:24px;">
+        <div class="form-section-title" style="margin-bottom:16px;">Partecipanti</div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>#</th><th>Nome</th><th>Tipo</th></tr></thead>
+            <tbody>
+              <[foreach]>
+              <tr>
+                <td><[bp_num]></td>
+                <td><[bp_name]></td>
+                <td><[bp_primary]></td>
+              </tr>
+              <[/foreach]>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; display:flex; gap:12px;">
+        <[if!empty can_cancel_booking]>
+        <form method="POST" action="<[base_url]>admin/bookings/cancel.php">
+          <input type="hidden" name="csrf_token" value="<[csrf_token]>">
+          <input type="hidden" name="booking_id" value="<[bk_id]>">
+          <button type="submit" class="btn btn-danger" onclick="return confirm('Cancellare questa prenotazione?')">✕ Cancella prenotazione</button>
+        </form>
+        <[/if!empty]>
+        <[if!empty can_confirm_booking]>
+        <form method="POST" action="<[base_url]>admin/bookings/confirm.php">
+          <input type="hidden" name="csrf_token" value="<[csrf_token]>">
+          <input type="hidden" name="booking_id" value="<[bk_id]>">
+          <button type="submit" class="btn btn-primary">✓ Conferma prenotazione</button>
+        </form>
+        <[/if!empty]>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="<[base_url]>js/admin.js"></script>
+</body>
+</html>

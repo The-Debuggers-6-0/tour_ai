@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><[gf_page_title]> — Admin — <[site_name]></title>
+  <link rel="stylesheet" href="<[base_url]>css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand"><a href="<[base_url]>" class="sidebar-logo"><[site_name]></a><div class="sidebar-subtitle">Pannello Admin</div></div>
+    <nav class="sidebar-nav">
+      <a href="<[base_url]>admin/" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <a href="<[base_url]>admin/tours/list.php" class="sidebar-link"><span class="sidebar-icon">🗺</span> Tour</a>
+      <a href="<[base_url]>admin/guides/list.php" class="sidebar-link active"><span class="sidebar-icon">👤</span> Guide</a>
+      <a href="<[base_url]>admin/slots/list.php" class="sidebar-link"><span class="sidebar-icon">📅</span> Slot</a>
+      <a href="<[base_url]>admin/categories/list.php" class="sidebar-link"><span class="sidebar-icon">🏷</span> Categorie</a>
+      <a href="<[base_url]>admin/locations/list.php" class="sidebar-link"><span class="sidebar-icon">📍</span> Luoghi</a>
+      <a href="<[base_url]>admin/bookings/list.php" class="sidebar-link"><span class="sidebar-icon">📋</span> Prenotazioni</a>
+      <a href="<[base_url]>admin/reviews/list.php" class="sidebar-link"><span class="sidebar-icon">⭐</span> Recensioni</a>
+      <a href="<[base_url]>admin/users/list.php" class="sidebar-link"><span class="sidebar-icon">👥</span> Utenti</a>
+    </nav>
+    <div class="sidebar-footer"><a href="<[base_url]>logout.php">Esci</a></div>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title"><[gf_page_title]></div>
+      <div class="topbar-user"><div class="topbar-avatar"><[admin_initial]></div><span><[admin_name]></span></div>
+    </div>
+    <div class="admin-content">
+      <div class="page-header">
+        <div class="page-header-left"><h1><[gf_page_title]></h1></div>
+        <a href="<[base_url]>admin/guides/list.php" class="btn btn-secondary">← Torna alla lista</a>
+      </div>
+      <[if!empty flash_message]><div class="alert alert-<[flash_type]>"><span><[flash_message]></span><button class="alert-close">✕</button></div><[/if!empty]>
+
+      <form method="POST" action="<[gf_action]>" enctype="multipart/form-data" class="admin-form">
+        <input type="hidden" name="csrf_token" value="<[csrf_token]>">
+        <input type="hidden" name="guide_id" value="<[g_id]>">
+        <div class="form-section">
+          <div class="form-section-title">Dati personali</div>
+          <div class="form-section-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Nome <span class="req">*</span></label>
+                <input type="text" name="first_name" class="form-control" value="<[g_first]>" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cognome <span class="req">*</span></label>
+                <input type="text" name="last_name" class="form-control" value="<[g_last]>" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" value="<[g_email]>">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Telefono</label>
+                <input type="tel" name="phone" class="form-control" value="<[g_phone]>">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Specializzazione</label>
+                <input type="text" name="specialization" class="form-control" value="<[g_spec]>" placeholder="es. Arte Rinascimentale, Natura">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Lingue parlate</label>
+                <input type="text" name="languages" class="form-control" value="<[g_langs]>" placeholder="es. Italiano, Inglese, Francese">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Biografia</label>
+              <textarea name="bio" class="form-control" rows="5"><[g_bio]></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <div class="form-section-title">Foto profilo</div>
+          <div class="form-section-body" style="display:flex; gap:20px; align-items:center;">
+            <[if!empty g_photo]>
+            <img id="photo-preview" src="<[base_url]><[g_photo]>" alt="Foto guida" style="width:100px;height:100px;border-radius:50%;object-fit:cover;">
+            <[/if!empty]>
+            <[ifempty g_photo]>
+            <img id="photo-preview" src="" alt="" style="width:100px;height:100px;border-radius:50%;object-fit:cover;display:none;">
+            <[/ifempty]>
+            <div>
+              <label class="btn btn-secondary btn-sm" style="cursor:pointer;">
+                📷 Carica foto
+                <input type="file" id="photo-upload" name="profile_photo" accept="image/jpeg,image/png,image/webp" style="display:none;">
+              </label>
+              <div class="form-text" style="margin-top:6px;">JPG, PNG o WEBP — max 5MB</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <div class="form-section-title">Stato</div>
+          <div class="form-section-body">
+            <label class="checkbox-item" style="width:fit-content;">
+              <input type="checkbox" name="is_active" value="1" <[g_active_checked]>>
+              <span class="checkbox-label">Guida attiva</span>
+            </label>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <button type="submit" class="btn btn-primary btn-lg">💾 Salva</button>
+          <a href="<[base_url]>admin/guides/list.php" class="btn btn-secondary btn-lg">Annulla</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+<script src="<[base_url]>js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><[form_page_title]> — Admin — <[site_name]></title>
+  <link rel="stylesheet" href="<[base_url]>css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <a href="<[base_url]>" class="sidebar-logo"><[site_name]></a>
+      <div class="sidebar-subtitle">Pannello Admin</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="<[base_url]>admin/" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <a href="<[base_url]>admin/tours/list.php" class="sidebar-link active"><span class="sidebar-icon">🗺</span> Tour</a>
+      <a href="<[base_url]>admin/guides/list.php" class="sidebar-link"><span class="sidebar-icon">👤</span> Guide</a>
+      <a href="<[base_url]>admin/slots/list.php" class="sidebar-link"><span class="sidebar-icon">📅</span> Slot</a>
+      <a href="<[base_url]>admin/categories/list.php" class="sidebar-link"><span class="sidebar-icon">🏷</span> Categorie</a>
+      <a href="<[base_url]>admin/locations/list.php" class="sidebar-link"><span class="sidebar-icon">📍</span> Luoghi</a>
+      <a href="<[base_url]>admin/bookings/list.php" class="sidebar-link"><span class="sidebar-icon">📋</span> Prenotazioni</a>
+      <a href="<[base_url]>admin/reviews/list.php" class="sidebar-link"><span class="sidebar-icon">⭐</span> Recensioni</a>
+      <a href="<[base_url]>admin/users/list.php" class="sidebar-link"><span class="sidebar-icon">👥</span> Utenti</a>
+    </nav>
+    <div class="sidebar-footer"><a href="<[base_url]>logout.php">Esci</a></div>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title"><[form_page_title]></div>
+      <div class="topbar-user"><div class="topbar-avatar"><[admin_initial]></div><span><[admin_name]></span></div>
+    </div>
+    <div class="admin-content">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1><[form_page_title]></h1>
+          <div class="page-breadcrumb"><a href="<[base_url]>admin/">Dashboard</a> / <a href="<[base_url]>admin/tours/list.php">Tour</a> / <[form_page_title]></div>
+        </div>
+        <a href="<[base_url]>admin/tours/list.php" class="btn btn-secondary">← Torna alla lista</a>
+      </div>
+
+      <[if!empty flash_message]>
+      <div class="alert alert-<[flash_type]>"><span><[flash_message]></span><button class="alert-close">✕</button></div>
+      <[/if!empty]>
+
+      <form method="POST" action="<[form_action]>" enctype="multipart/form-data" class="admin-form">
+        <input type="hidden" name="csrf_token" value="<[csrf_token]>">
+        <input type="hidden" name="tour_id" value="<[t_id]>">
+
+        <!-- Informazioni base -->
+        <div class="form-section">
+          <div class="form-section-title">Informazioni principali</div>
+          <div class="form-section-body">
+            <div class="form-group">
+              <label class="form-label">Titolo <span class="req">*</span></label>
+              <input type="text" id="tour-title" name="title" class="form-control" value="<[t_title]>" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Slug URL <span class="req">*</span></label>
+                <input type="text" id="tour-slug" name="slug" class="form-control" value="<[t_slug]>" required>
+                <span class="form-text">es. fori-imperiali-roma (generato automaticamente)</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Prezzo a persona (€) <span class="req">*</span></label>
+                <input type="number" name="price_per_person" class="form-control" value="<[t_price]>" min="0" step="0.01" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Breve descrizione</label>
+              <input type="text" name="short_description" class="form-control" value="<[t_short_desc]>" maxlength="500" placeholder="Max 500 caratteri">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Descrizione completa <span class="req">*</span></label>
+              <textarea name="description" class="form-control" rows="8" required><[t_description]></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dettagli -->
+        <div class="form-section">
+          <div class="form-section-title">Dettagli tour</div>
+          <div class="form-section-body">
+            <div class="form-row-3">
+              <div class="form-group">
+                <label class="form-label">Durata (minuti) <span class="req">*</span></label>
+                <input type="number" name="duration_minutes" class="form-control" value="<[t_duration]>" min="15" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Max partecipanti <span class="req">*</span></label>
+                <input type="number" name="max_participants" class="form-control" value="<[t_max_part]>" min="1" max="50" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Difficoltà</label>
+                <select name="difficulty_level" class="form-control">
+                  <option value="facile"    <[t_diff_facile]>>Facile</option>
+                  <option value="medio"     <[t_diff_medio]>>Medio</option>
+                  <option value="difficile" <[t_diff_difficile]>>Difficile</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Categoria <span class="req">*</span></label>
+                <select name="categories_id" class="form-control" required>
+                  <option value="">-- Seleziona --</option>
+                  <[foreach]>
+                  <option value="<[co_id]>" <[co_selected]>><[co_name]></option>
+                  <[/foreach]>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Luogo <span class="req">*</span></label>
+                <select name="locations_id" class="form-control" required>
+                  <option value="">-- Seleziona --</option>
+                  <[foreach]>
+                  <option value="<[lo_id]>" <[lo_selected]>><[lo_city]></option>
+                  <[/foreach]>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Punto di ritrovo</label>
+              <input type="text" name="meeting_point" class="form-control" value="<[t_meeting]>">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Servizi inclusi</label>
+                <textarea name="included_services" class="form-control" rows="4" placeholder="Un servizio per riga"><[t_included]></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cosa portare</label>
+                <textarea name="what_to_bring" class="form-control" rows="4" placeholder="Un elemento per riga"><[t_tobring]></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guide -->
+        <div class="form-section">
+          <div class="form-section-title">Guide assegnate</div>
+          <div class="form-section-body">
+            <div class="checkbox-grid">
+              <[foreach]>
+              <label class="checkbox-item">
+                <input type="checkbox" name="guide_ids[]" value="<[go_id]>" <[go_checked]>>
+                <div class="checkbox-label">
+                  <strong><[go_name]></strong>
+                  <div style="font-size:0.78rem; color:#8B7355; margin-top:2px;">
+                    <input type="checkbox" name="lead_guide_id" value="<[go_id]>" <[go_lead]>> Lead guide
+                  </div>
+                </div>
+              </label>
+              <[/foreach]>
+            </div>
+          </div>
+        </div>
+
+        <!-- Immagini -->
+        <div class="form-section">
+          <div class="form-section-title">Immagini</div>
+          <div class="form-section-body">
+            <[if!empty has_existing_images]>
+            <h4 style="margin-bottom:12px;">Immagini attuali</h4>
+            <div class="image-preview-grid" style="margin-bottom:24px;">
+              <[foreach]>
+              <div class="image-preview-item">
+                <img src="<[base_url]><[ei_path]>" alt="<[ei_alt]>">
+                <label class="cover-radio">
+                  <input type="radio" name="cover_image_existing" value="<[ei_id]>" <[ei_cover_checked]>> Cover
+                </label>
+                <label style="position:absolute;top:4px;left:4px;background:rgba(192,57,43,0.8);color:white;font-size:0.7rem;padding:2px 6px;border-radius:4px;cursor:pointer;">
+                  <input type="checkbox" name="delete_images[]" value="<[ei_id]>" style="display:none;"> ✕ Elimina
+                </label>
+              </div>
+              <[/foreach]>
+            </div>
+            <[/if!empty]>
+            <div class="upload-zone" id="upload-zone">
+              <input type="file" id="image-upload" name="tour_images[]" accept="image/jpeg,image/png,image/webp" multiple>
+              <div class="upload-icon">📷</div>
+              <div class="upload-text">Clicca o trascina per caricare immagini (JPG, PNG, WEBP — max 5MB cad.)</div>
+            </div>
+            <div id="preview-grid" class="image-preview-grid"></div>
+          </div>
+        </div>
+
+        <!-- Stato -->
+        <div class="form-section">
+          <div class="form-section-title">Pubblicazione</div>
+          <div class="form-section-body">
+            <label class="checkbox-item" style="width:fit-content;">
+              <input type="checkbox" name="is_active" value="1" <[t_active_checked]>>
+              <span class="checkbox-label">Tour attivo (visibile sul sito)</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px;">
+          <button type="submit" class="btn btn-primary btn-lg">💾 Salva tour</button>
+          <a href="<[base_url]>admin/tours/list.php" class="btn btn-secondary btn-lg">Annulla</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+<script src="<[base_url]>js/admin.js"></script>
+</body>
+</html>

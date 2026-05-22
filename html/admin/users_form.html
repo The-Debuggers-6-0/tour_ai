@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifica utente — Admin — <[site_name]></title>
+  <link rel="stylesheet" href="<[base_url]>css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand"><a href="<[base_url]>" class="sidebar-logo"><[site_name]></a><div class="sidebar-subtitle">Pannello Admin</div></div>
+    <nav class="sidebar-nav">
+      <a href="<[base_url]>admin/" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <a href="<[base_url]>admin/tours/list.php" class="sidebar-link"><span class="sidebar-icon">🗺</span> Tour</a>
+      <a href="<[base_url]>admin/guides/list.php" class="sidebar-link"><span class="sidebar-icon">👤</span> Guide</a>
+      <a href="<[base_url]>admin/slots/list.php" class="sidebar-link"><span class="sidebar-icon">📅</span> Slot</a>
+      <a href="<[base_url]>admin/categories/list.php" class="sidebar-link"><span class="sidebar-icon">🏷</span> Categorie</a>
+      <a href="<[base_url]>admin/locations/list.php" class="sidebar-link"><span class="sidebar-icon">📍</span> Luoghi</a>
+      <a href="<[base_url]>admin/bookings/list.php" class="sidebar-link"><span class="sidebar-icon">📋</span> Prenotazioni</a>
+      <a href="<[base_url]>admin/reviews/list.php" class="sidebar-link"><span class="sidebar-icon">⭐</span> Recensioni</a>
+      <a href="<[base_url]>admin/users/list.php" class="sidebar-link active"><span class="sidebar-icon">👥</span> Utenti</a>
+    </nav>
+    <div class="sidebar-footer"><a href="<[base_url]>logout.php">Esci</a></div>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title">Modifica utente</div>
+      <div class="topbar-user"><div class="topbar-avatar"><[admin_initial]></div><span><[admin_name]></span></div>
+    </div>
+    <div class="admin-content">
+      <div class="page-header">
+        <div class="page-header-left"><h1>Modifica utente</h1></div>
+        <a href="<[base_url]>admin/users/list.php" class="btn btn-secondary">← Torna alla lista</a>
+      </div>
+      <[if!empty flash_message]><div class="alert alert-<[flash_type]>"><span><[flash_message]></span><button class="alert-close">✕</button></div><[/if!empty]>
+
+      <form method="POST" action="<[base_url]>admin/users/edit.php" class="admin-form">
+        <input type="hidden" name="csrf_token" value="<[csrf_token]>">
+        <input type="hidden" name="user_id" value="<[u_id]>">
+        <div class="form-section">
+          <div class="form-section-title">Dati account</div>
+          <div class="form-section-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Username <span class="req">*</span></label>
+                <input type="text" name="username" class="form-control" value="<[u_username]>" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email <span class="req">*</span></label>
+                <input type="email" name="email" class="form-control" value="<[u_email]>" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Nome</label>
+                <input type="text" name="first_name" class="form-control" value="<[u_first]>">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cognome</label>
+                <input type="text" name="last_name" class="form-control" value="<[u_last]>">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Telefono</label>
+                <input type="tel" name="phone" class="form-control" value="<[u_phone]>">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Gruppo <span class="req">*</span></label>
+                <select name="group_id" class="form-control" required>
+                  <[foreach]>
+                  <option value="<[grp_id]>" <[grp_selected]>><[grp_name]></option>
+                  <[/foreach]>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nuova password <span style="color:#8B7355;">(lascia vuoto per non cambiare)</span></label>
+              <input type="password" name="new_password" class="form-control" autocomplete="new-password">
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <div class="form-section-title">Stato</div>
+          <div class="form-section-body">
+            <label class="checkbox-item" style="width:fit-content;">
+              <input type="checkbox" name="is_active" value="1" <[u_active_checked]>>
+              <span class="checkbox-label">Account attivo</span>
+            </label>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <button type="submit" class="btn btn-primary btn-lg">💾 Salva</button>
+          <a href="<[base_url]>admin/users/list.php" class="btn btn-secondary btn-lg">Annulla</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+<script src="<[base_url]>js/admin.js"></script>
+</body>
+</html>

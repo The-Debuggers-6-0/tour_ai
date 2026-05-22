@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><[locf_page_title]> — Admin — <[site_name]></title>
+  <link rel="stylesheet" href="<[base_url]>css/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand"><a href="<[base_url]>" class="sidebar-logo"><[site_name]></a><div class="sidebar-subtitle">Pannello Admin</div></div>
+    <nav class="sidebar-nav">
+      <a href="<[base_url]>admin/" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <a href="<[base_url]>admin/tours/list.php" class="sidebar-link"><span class="sidebar-icon">🗺</span> Tour</a>
+      <a href="<[base_url]>admin/guides/list.php" class="sidebar-link"><span class="sidebar-icon">👤</span> Guide</a>
+      <a href="<[base_url]>admin/slots/list.php" class="sidebar-link"><span class="sidebar-icon">📅</span> Slot</a>
+      <a href="<[base_url]>admin/categories/list.php" class="sidebar-link"><span class="sidebar-icon">🏷</span> Categorie</a>
+      <a href="<[base_url]>admin/locations/list.php" class="sidebar-link active"><span class="sidebar-icon">📍</span> Luoghi</a>
+      <a href="<[base_url]>admin/bookings/list.php" class="sidebar-link"><span class="sidebar-icon">📋</span> Prenotazioni</a>
+      <a href="<[base_url]>admin/reviews/list.php" class="sidebar-link"><span class="sidebar-icon">⭐</span> Recensioni</a>
+      <a href="<[base_url]>admin/users/list.php" class="sidebar-link"><span class="sidebar-icon">👥</span> Utenti</a>
+    </nav>
+    <div class="sidebar-footer"><a href="<[base_url]>logout.php">Esci</a></div>
+  </aside>
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title"><[locf_page_title]></div>
+      <div class="topbar-user"><div class="topbar-avatar"><[admin_initial]></div><span><[admin_name]></span></div>
+    </div>
+    <div class="admin-content">
+      <div class="page-header">
+        <div class="page-header-left"><h1><[locf_page_title]></h1></div>
+        <a href="<[base_url]>admin/locations/list.php" class="btn btn-secondary">← Torna alla lista</a>
+      </div>
+      <[if!empty flash_message]><div class="alert alert-<[flash_type]>"><span><[flash_message]></span><button class="alert-close">✕</button></div><[/if!empty]>
+
+      <form method="POST" action="<[locf_action]>" class="admin-form">
+        <input type="hidden" name="csrf_token" value="<[csrf_token]>">
+        <input type="hidden" name="location_id" value="<[loc_id]>">
+        <div class="form-section">
+          <div class="form-section-title">Dati luogo</div>
+          <div class="form-section-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Città <span class="req">*</span></label>
+                <input type="text" name="city" class="form-control" value="<[loc_city]>" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Provincia</label>
+                <input type="text" name="province" class="form-control" value="<[loc_province]>" maxlength="5" placeholder="es. RM">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Regione</label>
+                <input type="text" name="region" class="form-control" value="<[loc_region]>">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Paese</label>
+                <input type="text" name="country" class="form-control" value="<[loc_country]>">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Indirizzo</label>
+              <input type="text" name="address" class="form-control" value="<[loc_address]>">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Latitudine</label>
+                <input type="number" name="latitude" class="form-control" value="<[loc_lat]>" step="0.000001" placeholder="es. 41.902782">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Longitudine</label>
+                <input type="number" name="longitude" class="form-control" value="<[loc_lng]>" step="0.000001" placeholder="es. 12.496366">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <button type="submit" class="btn btn-primary btn-lg">💾 Salva</button>
+          <a href="<[base_url]>admin/locations/list.php" class="btn btn-secondary btn-lg">Annulla</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+<script src="<[base_url]>js/admin.js"></script>
+</body>
+</html>
