@@ -45,7 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'sssssii', $username, $email, $first, $last, $phone, $isActive, $userId);
     }
 
-    if ($groupId > 0) {
+    // Solo "admin" o utente normale: da qui non si possono assegnare le guide.
+    $allowedGroups = array_map('intval', array_column(
+        queryAll("SELECT id FROM groups WHERE name IN ('admin','registered_user')"), 'id'));
+    if ($groupId > 0 && in_array($groupId, $allowedGroups, true)) {
         execute("DELETE FROM users_has_groups WHERE users_id = ?", 'i', $userId);
         execute("INSERT INTO users_has_groups (users_id, groups_id) VALUES (?,?)", 'ii', $userId, $groupId);
     }
@@ -72,10 +75,13 @@ $tpl->setContent('password_required','');
 $tpl->setContent('csrf_token',       generateCsrfToken());
 $tpl->setContent('grp_is_user',      $currentGroupId === 3 || $currentGroupId === 0 ? '1' : '');
 
-$groups = queryAll("SELECT id, name FROM groups WHERE name IN ('admin', 'guide') ORDER BY name");
+// L'admin può assegnare solo "admin" o utente normale ("registered_user").
+// Le guide NON si gestiscono da qui: hanno una sezione dedicata.
+$groupLabels = ['admin' => 'Admin', 'registered_user' => 'Utente'];
+$groups = queryAll("SELECT id, name FROM groups WHERE name IN ('admin', 'registered_user') ORDER BY name");
 foreach ($groups as $grp) {
     $tpl->setContent('grp_id',       (int)$grp['id']);
-    $tpl->setContent('grp_name',     htmlspecialchars($grp['name']));
+    $tpl->setContent('grp_name',     htmlspecialchars($groupLabels[$grp['name']] ?? $grp['name']));
     $tpl->setContent('grp_selected', (int)$grp['id'] === $currentGroupId ? 'selected' : '');
 }
 $tpl->close();

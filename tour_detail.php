@@ -93,7 +93,11 @@ $tpl->setContent('tour_category',        htmlspecialchars($tour['category_name']
 $tpl->setContent('tour_rating',          number_format($avgRating, 1));
 $tpl->setContent('tour_stars',           renderStars($avgRating));
 $tpl->setContent('tour_reviews_count',   $reviewsCount);
-$tpl->setContent('tour_description',     nl2br(htmlspecialchars($tour['description'])));
+// La descrizione è un campo rich-text che può contenere HTML (<p>, <br>, ...).
+// Se contiene tag la mostriamo renderizzata; se è testo semplice manteniamo
+// l'escape + i ritorni a capo per non introdurre rischi XSS.
+$desc = $tour['description'] ?? '';
+$tpl->setContent('tour_description',     $desc !== strip_tags($desc) ? $desc : nl2br(htmlspecialchars($desc)));
 
 // Included services / what to bring as HTML lists
 $included = $tour['included_services'] ?? '';

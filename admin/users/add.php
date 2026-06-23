@@ -38,7 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
     $newUserId = getConnection()->insert_id;
 
-    if ($groupId > 0) {
+    // Solo "admin" o utente normale: da qui non si possono creare le guide.
+    $allowedGroups = array_map('intval', array_column(
+        queryAll("SELECT id FROM groups WHERE name IN ('admin','registered_user')"), 'id'));
+    if ($groupId > 0 && in_array($groupId, $allowedGroups, true)) {
         execute("INSERT INTO users_has_groups (users_id, groups_id) VALUES (?,?)", 'ii', $newUserId, $groupId);
     }
 
@@ -60,10 +63,13 @@ $tpl->setContent('password_required','required');
 $tpl->setContent('csrf_token',       generateCsrfToken());
 $tpl->setContent('grp_is_user',      '1');
 
-$groups = queryAll("SELECT id, name FROM groups WHERE name IN ('admin', 'guide') ORDER BY name");
+// L'admin può creare solo "admin" o utente normale ("registered_user").
+// Le guide NON si creano da qui: hanno una sezione dedicata.
+$groupLabels = ['admin' => 'Admin', 'registered_user' => 'Utente'];
+$groups = queryAll("SELECT id, name FROM groups WHERE name IN ('admin', 'registered_user') ORDER BY name");
 foreach ($groups as $grp) {
     $tpl->setContent('grp_id',       (int)$grp['id']);
-    $tpl->setContent('grp_name',     htmlspecialchars($grp['name']));
+    $tpl->setContent('grp_name',     htmlspecialchars($groupLabels[$grp['name']] ?? $grp['name']));
     $tpl->setContent('grp_selected', '');
 }
 $tpl->close();
